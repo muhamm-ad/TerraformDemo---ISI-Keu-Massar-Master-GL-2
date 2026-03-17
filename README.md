@@ -16,7 +16,14 @@ Déploiement d’une infrastructure AWS minimale : VPC, subnet public, instance 
 
 ## Utilisation
 
-1. **Configurer les variables**
+1. **Générer une clé SSH (si tu n’en as pas déjà une)**
+
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "ton.email@example.com"
+   # Chemin par défaut proposé : /home/<user>/.ssh/id_rsa ou C:\Users\<user>\.ssh\id_rsa
+   ```
+
+2. **Configurer les variables**
 
    ```bash
    cp terraform.tfvars.example terraform.tfvars
@@ -25,9 +32,9 @@ Déploiement d’une infrastructure AWS minimale : VPC, subnet public, instance 
    Éditer `terraform.tfvars` et renseigner au minimum :
    - `availability_zone` (ex. `eu-west-1a`)
    - `aws_access_key` / `aws_secret_key` (ou utiliser les variables d’environnement `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`)
-   - `public_key_path` : chemin vers ta clé publique SSH
+   - `public_key_path` : chemin vers ta clé publique SSH (ex. `~/.ssh/id_rsa.pub`)
 
-2. **Initialiser et déployer**
+3. **Initialiser et déployer**
 
    ```bash
    terraform init
@@ -35,7 +42,7 @@ Déploiement d’une infrastructure AWS minimale : VPC, subnet public, instance 
    terraform apply
    ```
 
-3. **Connexion SSH**
+4. **Connexion SSH**
 
    Après `apply`, la sortie affiche la commande SSH. Exemple :
    
@@ -43,7 +50,7 @@ Déploiement d’une infrastructure AWS minimale : VPC, subnet public, instance 
    ssh -i ~/.ssh/id_rsa ubuntu@<IP_PUBLIQUE>
    ```
 
-4. **Détruire l’infrastructure**
+5. **Détruire l’infrastructure**
 
    ```bash
    terraform destroy
